@@ -27,3 +27,19 @@ input {
   padding: 0 10px;
   width: 100%;
 }
+
+button {
+  align-items: center;
+  border-radius: 100px;
+  display: inline-block;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  height: 44px;
+  justify-content: center;
+  line-height: 0;
+  padding: 11px 25px;
+  pointer-events: auto;
+  text-align: center;
+  white-space: nowrap;
+}
