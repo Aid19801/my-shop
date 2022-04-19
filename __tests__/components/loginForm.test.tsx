@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { LoginForm } from "./";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { LoginForm } from "@/components/login-form";
 
 describe("LoginForm", () => {
   it("should render the component without exploding", () => {
@@ -13,6 +13,12 @@ describe("LoginForm", () => {
   });
   it("should capture the user's username as expected", () => {
     render(<LoginForm />);
-    expect(container).toMatchSnapshot();
+    screen.getByLabelText("username");
   });
+  // it("should capture the user's password as expected", () => {
+  //   // render(<LoginForm />);
+  //   // const el = screen.getByTestId("password");
+  //   // el.simul
+  //   // expect(container).toMatchSnapshot();
+  // });
 });

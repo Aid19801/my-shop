@@ -1,5 +1,5 @@
 .container {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     height: 80vh;
     display: flex;
     align-items: center;
@@ -7,8 +7,7 @@
 }
 
 .main {
-    width: 30%;
-    border: 1px solid blue;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,5 +15,12 @@
 }
 
 .title {
-    border: 1px solid red;
+    font-size: 16px;
+    font-family: monospace;
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        width: 100%;
+    }
 }

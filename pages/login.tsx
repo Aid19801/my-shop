@@ -1,23 +1,56 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { LoginForm } from '../components'
-import styles from "../styles/login.module.css";
+import React, { useState } from "react";
+import useUser from "lib/useUser";
+import Layout from "../components/layout";
+import Form from "../components/login-form";
+import fetchJson, { FetchError } from "lib/fetchJson";
 
-const Login: NextPage = () => {
+export default function Login() {
+  const { mutateUser } = useUser({
+    redirectTo: "/categories",
+    redirectIfFound: true,
+  });
+
+  const [errorMsg, setErrorMsg] = useState("");
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Login</title>
-      </Head>
+    <Layout>
+      <div className="login">
+        <Form
+          errorMessage={errorMsg}
+          onSubmit={async function handleSubmit(event) {
+            event.preventDefault();
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Login
-        </h1>
-        <LoginForm />
-      </main>
-    </div>
-  )
+            const body = {
+              username: event.currentTarget.username.value,
+            };
+
+            try {
+              mutateUser(
+                await fetchJson("/api/login", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+              );
+            } catch (error) {
+              if (error instanceof FetchError) {
+                setErrorMsg(error.data.message);
+              } else {
+                console.error("An unexpected error happened:", error);
+              }
+            }
+          }}
+        />
+      </div>
+      <style jsx>{`
+        .login {
+          max-width: 21rem;
+          margin: 0 auto;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+      `}</style>
+    </Layout>
+  );
 }
-
-export default Login

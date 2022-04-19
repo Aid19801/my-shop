@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPage should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <main
+      class="main"
+    >
+      <h1
+        class="title"
+      >
+        Login
+      </h1>
+      <form
+        class="Form"
+        data-testid="login-form"
+      >
+        <div
+          class="Input__container"
+        >
+          <label
+            class="Input__label"
+            for="username"
+          >
+            username
+          </label>
+          <input
+            aria-label="username"
+            class="Input__input"
+            name="username"
+          />
+        </div>
+        <div
+          class="Input__container"
+        >
+          <label
+            class="Input__label"
+            for="password"
+          >
+            password
+          </label>
+          <input
+            class="Input__input"
+            data-testid="password"
+            name="password"
+            type="password"
+          />
+        </div>
+        <input
+          class="button"
+          type="submit"
+        />
+      </form>
+    </main>
+  </div>
+</div>
+`;

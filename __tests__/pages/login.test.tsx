@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Login from "../pages/login";
+import Login from "@/pages/login";
 
 describe("LoginPage", () => {
   it("should render the page without exploding", () => {

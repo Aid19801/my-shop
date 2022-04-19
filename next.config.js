@@ -1,15 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/login",
-        permanent: true,
-      },
-    ];
+  images: {
+    domains: ["avatars.githubusercontent.com", "pbs.twimg.com"],
   },
 };
-
-module.exports = nextConfig;

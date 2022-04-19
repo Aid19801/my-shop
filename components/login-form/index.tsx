@@ -1,34 +1,44 @@
-import * as React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import styles from "./login.module.css";
+import { FormEvent } from "react";
 
-type Inputs = {
-  username: string;
-  password: string;
-};
-
-type LoginFormProps = {
-  //
-};
-export const LoginForm: React.FC<LoginFormProps> = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+export default function Form({
+  errorMessage,
+  onSubmit,
+}: {
+  errorMessage: string;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}) {
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("username", { required: true })} />
-        {errors.username && <span>This field is required</span>}
-        <input {...register("password", { required: true })} />
-        {errors.password && <span>This field is required</span>}
-        <input type="submit" />
-      </form>
-    </>
-  );
-};
+    <form onSubmit={onSubmit}>
+      <label>
+        <span>Type your GitHub username</span>
+        <input type="text" name="username" required />
+        <input type="text" name="password" required />
+      </label>
 
-export default LoginForm;
+      <button type="submit">Login</button>
+
+      {errorMessage && <p className="error">{errorMessage}</p>}
+
+      <style jsx>{`
+        form,
+        label {
+          display: flex;
+          flex-flow: column;
+        }
+        label > span {
+          font-weight: 600;
+        }
+        input {
+          padding: 8px;
+          margin: 0.3rem 0 1rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+        .error {
+          color: brown;
+          margin: 1rem 0 0;
+        }
+      `}</style>
+    </form>
+  );
+}
