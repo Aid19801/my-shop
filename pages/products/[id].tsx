@@ -6,7 +6,7 @@ import SectionCard from "components/section-card";
 import PageTitle from "components/page-title";
 import { ContentContainer } from "components/content-container";
 
-export default function Categories() {
+export default function Product() {
   const { user } = useUser({
     redirectTo: "/login",
   });
@@ -18,9 +18,9 @@ export default function Categories() {
   } else {
     return (
       <Layout>
-        <PageTitle text="Categories" />
-        <ContentContainer>
-          {categories &&
+        <PageTitle text="All Our Products" />
+        {/* <ContentContainer>
+          {categories?.length &&
             categories.map((each: string) => (
               <SectionCard
                 title={each}
@@ -31,7 +31,7 @@ export default function Categories() {
                 width={300}
               />
             ))}
-        </ContentContainer>
+        </ContentContainer> */}
       </Layout>
     );
   }

@@ -1,7 +1,8 @@
+import { processLongStrings } from "lib/utils";
 import Link from "next/link";
 import * as React from "react";
 
-type CardProps = {
+type SectionCardProps = {
   title: string;
   description?: string;
   destinationFolder: string;
@@ -11,7 +12,7 @@ type CardProps = {
   width?: number;
 };
 
-export const Card: React.FC<CardProps> = ({
+export const SectionCard: React.FC<SectionCardProps> = ({
   height = 300,
   width = 500,
   title,
@@ -28,25 +29,10 @@ export const Card: React.FC<CardProps> = ({
         as={`/${destinationFolder}/${slug}`}
       >
         <a className="card">
-          {img && (
-            <>
-              <div className="card__imgContainer">
-                <img src={img} alt={title} className="card__img" />
-              </div>
-              <div className="card__infoContainer__bottom">
-                <h4>{title}</h4>
-                {description && <p>{description}</p>}
-              </div>
-            </>
-          )}
-          {!img && (
-            <>
-              <div className="card__infoContainer__top">
-                <h4>{title}</h4>
-                {description && <p>{description}</p>}
-              </div>
-            </>
-          )}
+          <div className="card__infoContainer__top">
+            <h4>{title}</h4>
+            {description && <p>{processLongStrings(description)}</p>}
+          </div>
         </a>
       </Link>
       <style jsx>{`
@@ -63,7 +49,7 @@ export const Card: React.FC<CardProps> = ({
           position: relative;
         }
         .card:hover {
-          border: 2px solid green;
+          border: 2px solid red;
           background: rgba(255, 255, 255, 1);
         }
         .card__imgContainer {
@@ -115,4 +101,4 @@ export const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default SectionCard;

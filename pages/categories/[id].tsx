@@ -1,10 +1,13 @@
 import * as React from "react";
 import Layout from "components/layout";
-import Card from "components/card";
+import Card from "components/section-card";
 import useUser from "lib/useUser";
 import useCategories, { useCategory } from "lib/useCategories";
 import { CategoryType } from "../api/category";
 import { useRouter } from "next/router";
+import PageTitle from "components/page-title";
+import { ContentContainer } from "components/content-container";
+import ProductCard from "components/product-card";
 
 export const CategoryProductList = () => {
   const { user } = useUser({
@@ -20,43 +23,22 @@ export const CategoryProductList = () => {
   return (
     <Layout>
       <>
-        <h1>Products List</h1>
+        <PageTitle text={`Products // ${query.id}`} />
         {!category && <p>Loading...</p>}
-        <div className="productList__container">
+        <ContentContainer>
           {category &&
             category.map((each: CategoryType) => (
-              <Card
+              <ProductCard
                 key={each.id}
                 title={each.title}
                 description={each.description}
-                destinationFolder="products"
-                slug={each.id.toString()}
                 img={each.image}
+                height={240}
+                width={400}
               />
             ))}
-        </div>
+        </ContentContainer>
       </>
-      <style jsx>{`
-        h1 {
-          text-align: center;
-          font-family: monospace;
-          font-size: 50px;
-        }
-        .productList__container {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          justify-content: space-around;
-          align-items: stretch;
-          gap: 30px;
-        }
-        .productList__container > a.card {
-          flex: 1;
-          padding: 16px;
-          margin-right: 20px;
-          color: red;
-        }
-      `}</style>
     </Layout>
   );
 };

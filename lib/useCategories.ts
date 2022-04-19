@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import type { User } from "pages/api/user";
 import type { Categories } from "pages/api/categories";
-import type { Category } from "pages/api/category";
+import type { CategoryType } from "pages/api/category";
 
 export default function useCategories(user: User | undefined) {
   const { data: categories } = useSWR<Categories>(
@@ -12,7 +12,7 @@ export default function useCategories(user: User | undefined) {
 }
 
 export function useCategory(user: User | undefined, catName: string) {
-  const { data: category } = useSWR<Category>(
+  const { data: category } = useSWR<CategoryType>(
     user?.isLoggedIn ? `/api/category?catName=${catName}` : null
   );
 

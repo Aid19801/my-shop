@@ -13,6 +13,7 @@ export type CategoryType = {
         count: number;
     };
     title: string;
+    map: any;
 }
 
 export default withIronSessionApiRoute(categoryRoute, sessionOptions);
@@ -27,6 +28,11 @@ async function categoryRoute(
     res.status(401).end();
     return;
   }
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
 
   try {
     const resp = await fetch(

@@ -17,9 +17,18 @@ async function categoriesRoute(
     return;
   }
 
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
   try {
     const resp = await fetch(
-      "https://fakestoreapi.com/products/categories"
+      "https://fakestoreapi.com/products/categories",
+      {
+        headers: {
+
+        }
+      }
     );
     const categories = await resp.json();
     res.json(categories);

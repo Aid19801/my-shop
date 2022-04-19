@@ -3,6 +3,7 @@ import useUser from "lib/useUser";
 import Layout from "../components/layout";
 import Form from "../components/login-form";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import PageTitle from "components/page-title";
 
 export default function Login() {
   const { mutateUser } = useUser({
@@ -14,6 +15,7 @@ export default function Login() {
 
   return (
     <Layout>
+      <PageTitle text="Login" />
       <div className="login">
         <Form
           errorMessage={errorMsg}
