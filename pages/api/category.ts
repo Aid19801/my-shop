@@ -2,25 +2,25 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export type CategoryType = {
+export type ProductType = {
     category: "jewelery" | "electronics" | "men's clothing" | "women's clothing";
     description: string;
-    id: number;
-    image: string;
+    title: string;
     price: number;
+    image: string;
+    id: number;
     rating: {
         rate: number;
         count: number;
     };
-    title: string;
-    map: any;
+    map?: any;
 }
 
 export default withIronSessionApiRoute(categoryRoute, sessionOptions);
 
 async function categoryRoute(
   req: NextApiRequest,
-  res: NextApiResponse<CategoryType[] | []>
+  res: NextApiResponse<ProductType[] | []>
 ) {
   const user = req.session.user;
 

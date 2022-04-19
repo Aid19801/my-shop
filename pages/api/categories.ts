@@ -2,7 +2,9 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export type Categories = ["electronics", "jewelry", "men's clothing", "women's clothing"] | [];
+export type Categories =
+  | ["electronics", "jewelry", "men's clothing", "women's clothing"]
+  | [];
 
 export default withIronSessionApiRoute(categoriesRoute, sessionOptions);
 
@@ -18,18 +20,11 @@ async function categoriesRoute(
   }
 
   res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   try {
-    const resp = await fetch(
-      "https://fakestoreapi.com/products/categories",
-      {
-        headers: {
-
-        }
-      }
-    );
+    const resp = await fetch("https://fakestoreapi.com/products/categories");
     const categories = await resp.json();
     res.json(categories);
   } catch (error) {

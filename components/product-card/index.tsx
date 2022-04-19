@@ -1,40 +1,73 @@
 import * as React from "react";
 import Link from "next/link";
 import { processLongStrings } from "../../lib/utils";
+import { useMainContext } from "context/main";
+import { ProductType } from "pages/api/category";
 
-type ProductCardProps = {
-  title: string;
-  description?: string;
-  img?: string;
+interface ProductCardProps extends ProductType {
   height?: number;
   width?: number;
-};
+  id: number;
+}
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   height = 300,
   width = 500,
+  category,
   title,
   description,
-  img,
+  price,
+  image,
+  id,
+  rating,
 }) => {
+  const [isInBasket, setIsInBasket] = React.useState<boolean>(false);
+  const { removeFromBasket, addToBasket, basket } = useMainContext();
+
+  React.useEffect(() => {
+    const bool = basket.filter((each) => each.id === id).length > 0;
+    if (bool) {
+      setIsInBasket(true);
+    } else {
+      setIsInBasket(false);
+    }
+    console.log("basket", basket);
+  }, [basket]);
+
+  const handleAddToBasket = () => {
+    addToBasket({
+      id,
+      title,
+      description,
+      image,
+      category,
+      price,
+      rating,
+    });
+  };
+  const handleRemove = () => {
+    removeFromBasket(id);
+  };
   return (
     <>
       <div className="card">
         <div className="card__imgContainer">
-          <img src={img} alt={title} className="card__img" />
+          <img src={image} alt={title} className="card__img" />
         </div>
         <div className="card__infoContainer__bottom">
           <h4>{title}</h4>
           {description && <p>{processLongStrings(description)}</p>}
         </div>
         <div className="card__buttonsContainer">
-          <button onClick={() => null}>Add To Cart</button>
-          <button onClick={() => null}>Remove To Cart</button>
+          <button onClick={handleAddToBasket}>Add To Cart</button>
+          <button onClick={handleRemove}>Remove To Cart</button>
         </div>
       </div>
       <style jsx>{`
         .card {
-          border: 2px solid rgba(0, 0, 0, 0.2);
+          border: ${
+            isInBasket ? `4px solid green;` : `2px solid rgba(0, 0, 0, 0.2);`
+          }
           transition: 300ms ease-in-out;
           width: ${width}px;
           height: ${height}px;

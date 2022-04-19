@@ -3,7 +3,7 @@ import Layout from "components/layout";
 import Card from "components/section-card";
 import useUser from "lib/useUser";
 import useCategories, { useCategory } from "lib/useCategories";
-import { CategoryType } from "../api/category";
+import { ProductType } from "../api/category";
 import { useRouter } from "next/router";
 import PageTitle from "components/page-title";
 import { ContentContainer } from "components/content-container";
@@ -27,14 +27,19 @@ export const CategoryProductList = () => {
         {!category && <p>Loading...</p>}
         <ContentContainer>
           {category &&
-            category.map((each: CategoryType) => (
+            category.map((each: ProductType) => (
               <ProductCard
+                // @ts-ignore
+                category={`${query.id}`}
+                price={each.price}
                 key={each.id}
+                id={each.id}
                 title={each.title}
                 description={each.description}
-                img={each.image}
+                image={each.image}
                 height={240}
                 width={400}
+                rating={each.rating}
               />
             ))}
         </ContentContainer>
