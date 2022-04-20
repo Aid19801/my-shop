@@ -14,6 +14,7 @@ export type ProductType = {
         count: number;
     };
     map?: any;
+    quantity?: number | null;
 }
 
 export default withIronSessionApiRoute(categoryRoute, sessionOptions);

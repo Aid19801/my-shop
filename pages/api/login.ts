@@ -7,16 +7,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
-  const { username } = req.body;
+  const { username, password } = req.body;
   let myHeaders = new Headers();
   myHeaders.append(
     "Content-Type",
     "application/x-www-form-urlencoded; charset=UTF-8"
   );
   let urlencoded = new URLSearchParams();
-  urlencoded.append("username", "mor_2314");
-  urlencoded.append("password", "83r5^_");
-
+  urlencoded.append("username", username);
+  urlencoded.append("password", password);
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -43,19 +42,4 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
-
-  // const { username } = await req.body;
-
-  // try {
-  //   const {
-  //     data: { login, avatar_url },
-  //   } = await octokit.rest.users.getByUsername({ username });
-
-  //   const user = { isLoggedIn: true, login, avatarUrl: avatar_url } as User;
-  //   req.session.user = user;
-  //   await req.session.save();
-  //   res.json(user);
-  // } catch (error) {
-  //   res.status(500).json({ message: (error as Error).message });
-  // }
 }

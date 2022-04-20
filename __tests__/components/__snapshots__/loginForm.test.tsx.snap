@@ -3,44 +3,38 @@
 exports[`LoginForm should match snapshot 1`] = `
 <div>
   <form
-    class="Form"
     data-testid="login-form"
   >
-    <div
-      class="Input__container"
-    >
-      <label
-        class="Input__label"
-        for="username"
-      >
-        username
-      </label>
-      <input
-        aria-label="username"
-        class="Input__input"
-        name="username"
-      />
-    </div>
-    <div
-      class="Input__container"
-    >
-      <label
-        class="Input__label"
-        for="password"
-      >
-        password
-      </label>
-      <input
-        class="Input__input"
-        data-testid="password"
-        name="password"
-        type="password"
-      />
-    </div>
     <input
-      class="button"
+      name="username"
+      placeholder="username"
+    />
+    <input
+      name="password"
+      placeholder="password"
+    />
+    <p>
+      foo
+    </p>
+    <input
       type="submit"
     />
   </form>
+  <style>
+    
+        form {
+          display: flex;
+          flex-direction: column;
+        }
+        input {
+          height: 30px;
+          margin-bottom: 30px;
+        }
+        .form__validationError {
+          color: red;
+          margin-top: -12px;
+        }
+      
+  </style>
 </div>
 `;

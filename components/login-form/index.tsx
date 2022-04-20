@@ -1,44 +1,75 @@
-import { FormEvent } from "react";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-export default function Form({
-  errorMessage,
-  onSubmit,
-}: {
-  errorMessage: string;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-}) {
+export type Credentials = {
+  username: string;
+  password: string;
+};
+
+type FormProps = {
+  onSubmit: (creds: Credentials) => void;
+  errorMsg: string;
+};
+
+export const Form: React.FC<FormProps> = ({ onSubmit, errorMsg }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Credentials>();
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        <span>Type your GitHub username</span>
-        <input type="text" name="username" required />
-        <input type="text" name="password" required />
-      </label>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
+        <input
+          placeholder="username"
+          {...register("username", { required: true, maxLength: 20 })}
+        />
+        {errors.username?.type === "required" && (
+          <p className="form__validationError">Username required</p>
+        )}
+        {errors.username?.type === "maxLength" && (
+          <p className="form__validationError">Username too long</p>
+        )}
 
-      <button type="submit">Login</button>
+        <input
+          placeholder="password"
+          {...register("password", {
+            required: true,
+            maxLength: 20,
+            minLength: 5,
+          })}
+        />
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
+        {errors.password?.type === "required" && (
+          <p className="form__validationError">Password required</p>
+        )}
+        {errors.password?.type === "maxLength" && (
+          <p className="form__validationError">Password too long</p>
+        )}
+        {errors.password?.type === "minLength" && (
+          <p className="form__validationError">Password too short</p>
+        )}
 
+        <p>{errorMsg}</p>
+        <input type="submit" />
+      </form>
       <style jsx>{`
-        form,
-        label {
+        form {
           display: flex;
-          flex-flow: column;
-        }
-        label > span {
-          font-weight: 600;
+          flex-direction: column;
         }
         input {
-          padding: 8px;
-          margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          height: 30px;
+          margin-bottom: 30px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        .form__validationError {
+          color: red;
+          margin-top: -12px;
         }
       `}</style>
-    </form>
+    </>
   );
-}
+};
+
+export default Form;

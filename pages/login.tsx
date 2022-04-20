@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import useUser from "lib/useUser";
+import * as React from "react";
+import useUser from "../lib/useUser";
 import Layout from "../components/layout";
-import Form from "../components/login-form";
-import fetchJson, { FetchError } from "lib/fetchJson";
-import PageTitle from "components/page-title";
+import Form, { Credentials } from "../components/login-form";
+import fetchJson, { FetchError } from "../lib/fetchJson";
+import PageTitle from "../components/page-title";
 
 export default function Login() {
   const { mutateUser } = useUser({
@@ -11,38 +11,45 @@ export default function Login() {
     redirectIfFound: true,
   });
 
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  const actionLoginRequest = async ({ username, password }: Credentials) => {
+    const body = {
+      username,
+      password,
+    };
+
+    setIsLoading(true);
+    try {
+      mutateUser(
+        await fetchJson("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        })
+      );
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      if (error instanceof FetchError) {
+        setErrorMsg(
+          "Oh no! There was a problem with your logins. Please try later or contact Support."
+        );
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
+    }
+  };
   return (
     <Layout>
       <PageTitle text="Login" />
       <div className="login">
-        <Form
-          errorMessage={errorMsg}
-          onSubmit={async function handleSubmit(event) {
-            event.preventDefault();
-
-            const body = {
-              username: event.currentTarget.username.value,
-            };
-
-            try {
-              mutateUser(
-                await fetchJson("/api/login", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                })
-              );
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
-              }
-            }
-          }}
-        />
+        {isLoading ? (
+          <h4>Loading...</h4>
+        ) : (
+          <Form onSubmit={actionLoginRequest} errorMsg={errorMsg} />
+        )}
       </div>
       <style jsx>{`
         .login {

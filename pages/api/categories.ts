@@ -3,7 +3,7 @@ import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export type Categories =
-  | ["electronics", "jewelry", "men's clothing", "women's clothing"]
+  | ["electronics", "jewelery", "men's clothing", "women's clothing"]
   | [];
 
 export default withIronSessionApiRoute(categoriesRoute, sessionOptions);

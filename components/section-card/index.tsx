@@ -1,6 +1,6 @@
-import { processLongStrings } from "lib/utils";
-import Link from "next/link";
 import * as React from "react";
+import Link from "next/link";
+import { processLongStrings } from "../../lib/utils";
 
 type SectionCardProps = {
   title: string;
@@ -37,6 +37,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
       </Link>
       <style jsx>{`
         .card {
+          text-decoration: none;
           border: 2px solid rgba(0, 0, 0, 0.2);
           transition: 300ms ease-in-out;
           width: ${width}px;

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import PageTitle from "components/page-title";
 import { ContentContainer } from "components/content-container";
 import ProductCard from "components/product-card";
+import withBasket from "components/with-basket";
 
 export const CategoryProductList = () => {
   const { user } = useUser({
@@ -48,4 +49,4 @@ export const CategoryProductList = () => {
   );
 };
 
-export default CategoryProductList;
+export default withBasket(CategoryProductList);

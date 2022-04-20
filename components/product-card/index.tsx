@@ -2,7 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { processLongStrings } from "../../lib/utils";
 import { useMainContext } from "context/main";
-import { ProductType } from "pages/api/category";
+import { ProductType } from "../../pages/api/category";
 
 interface ProductCardProps extends ProductType {
   height?: number;
@@ -22,17 +22,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   rating,
 }) => {
   const [isInBasket, setIsInBasket] = React.useState<boolean>(false);
-  const { removeFromBasket, addToBasket, basket } = useMainContext();
+  const { removeFromBasket, addToBasket, shopState } = useMainContext();
 
   React.useEffect(() => {
-    const bool = basket.filter((each) => each.id === id).length > 0;
-    if (bool) {
-      setIsInBasket(true);
-    } else {
-      setIsInBasket(false);
+    if (shopState.basket) {
+      setIsInBasket(
+        shopState.basket.filter((each) => each.id === id).length > 0
+      );
     }
-    console.log("basket", basket);
-  }, [basket]);
+  }, [shopState, id]);
 
   const handleAddToBasket = () => {
     addToBasket({
@@ -79,7 +77,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           position: relative;
         }
         .card:hover {
-          border: 4px solid red;
           background: rgba(255, 255, 255, 1);
         }
         .card__imgContainer {
@@ -135,7 +132,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           text-align: center;
         }
         h4 {
-          color: black;
+          color: ${isInBasket ? "green" : "black"};
           margin: 0;
         }
         p {

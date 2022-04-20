@@ -1,12 +1,13 @@
 import React from "react";
 import Layout from "../../components/layout";
-import useUser from "lib/useUser";
-import useCategories from "lib/useCategories";
-import SectionCard from "components/section-card";
-import PageTitle from "components/page-title";
-import { ContentContainer } from "components/content-container";
+import useUser from "../../lib/useUser";
+import useCategories from "../../lib/useCategories";
+import SectionCard from "../../components/section-card";
+import PageTitle from "../../components/page-title";
+import { ContentContainer } from "../../components/content-container";
+import withBasket from "../../components/with-basket";
 
-export default function Categories() {
+function Categories() {
   const { user } = useUser({
     redirectTo: "/login",
   });
@@ -36,3 +37,5 @@ export default function Categories() {
     );
   }
 }
+
+export default withBasket(Categories);
