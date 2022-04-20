@@ -27,31 +27,16 @@ export default function Header() {
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/profile-sg">
-                  <a>
-                    <span
-                      style={{
-                        marginRight: ".3em",
-                        verticalAlign: "middle",
-                        borderRadius: "100%",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <Image
-                        src={user.avatarUrl}
-                        width={32}
-                        height={32}
-                        alt=""
-                      />
-                    </span>
-                    Profile (Static Generation, recommended)
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/profile-ssr">
-                  <a>Profile (Server-side Rendering)</a>
-                </Link>
+                <span
+                  style={{
+                    marginRight: ".3em",
+                    verticalAlign: "middle",
+                    borderRadius: "100%",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image src={user.avatarUrl} width={32} height={32} alt="" />
+                </span>
               </li>
               <li>
                 <a
@@ -70,16 +55,6 @@ export default function Header() {
               </li>
             </>
           )}
-          <li>
-            <a href="https://github.com/vvo/iron-session">
-              <Image
-                src="/GitHub-Mark-Light-32px.png"
-                width="32"
-                height="32"
-                alt=""
-              />
-            </a>
-          </li>
         </ul>
       </nav>
       <style jsx>{`
