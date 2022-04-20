@@ -1,12 +1,21 @@
+#My Shop
+
 Steps to setup:
 
+```
 git clone
 
 npm install
 
 nvm use 16
 
-npm run test (Jest and RTL)
+npm run dev
+
+And then:
+
+npm run test for units
+```
+
 
 login using
 
