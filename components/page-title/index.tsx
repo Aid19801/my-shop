@@ -2,6 +2,7 @@ import * as React from "react";
 
 type TitleProps = {
   text: string;
+  
 };
 export const PageTitle: React.FC<TitleProps> = ({ text }) => (
   <>

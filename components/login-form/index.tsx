@@ -11,18 +11,18 @@ type FormProps = {
   errorMsg: string;
 };
 
-export const Form: React.FC<FormProps> = ({ onSubmit, errorMsg }) => {
+const MyForm: React.FC<FormProps> = ({ onSubmit, errorMsg }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Credentials>();
   return (
-    <>
+    <React.Fragment>
       <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
         <input
           placeholder="username"
+          data-testid="username"
           {...register("username", { required: true, maxLength: 20 })}
         />
         {errors.username?.type === "required" && (
@@ -36,7 +36,7 @@ export const Form: React.FC<FormProps> = ({ onSubmit, errorMsg }) => {
           placeholder="password"
           {...register("password", {
             required: true,
-            maxLength: 20,
+            maxLength: 100,
             minLength: 5,
           })}
         />
@@ -68,8 +68,8 @@ export const Form: React.FC<FormProps> = ({ onSubmit, errorMsg }) => {
           margin-top: -12px;
         }
       `}</style>
-    </>
+    </React.Fragment>
   );
 };
 
-export default Form;
+export default MyForm;

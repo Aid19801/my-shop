@@ -21,14 +21,14 @@ export default function Login() {
     };
 
     setIsLoading(true);
+
     try {
-      mutateUser(
-        await fetchJson("/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        })
-      );
+      const user: any = await fetchJson("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      await mutateUser(user);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
